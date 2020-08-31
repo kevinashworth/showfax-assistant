@@ -12,7 +12,7 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 const viewsPath = path.join(__dirname, 'views');
-const sourcePath = path.join(__dirname, 'source');
+const sourcePath = path.join(__dirname, 'src');
 const destPath = path.join(__dirname, 'extension');
 const nodeEnv = process.env.NODE_ENV || 'development';
 const targetBrowser = process.env.TARGET_BROWSER;
@@ -26,7 +26,7 @@ const extensionReloaderPlugin =
           // TODO: reload manifest on update
           contentScript: 'contentScript',
           background: 'background',
-          extensionPage: ['popup', 'options'],
+          extensionPage: ['options', 'popup'],
         },
       })
     : () => {
@@ -61,8 +61,8 @@ module.exports = {
     manifest: path.join(sourcePath, 'manifest.json'),
     background: path.join(sourcePath, 'Background', 'index.ts'),
     contentScript: path.join(sourcePath, 'ContentScript', 'index.ts'),
-    popup: path.join(sourcePath, 'Popup', 'index.tsx'),
     options: path.join(sourcePath, 'Options', 'index.tsx'),
+    popup: path.join(sourcePath, 'Popup', 'index.tsx')
   },
 
   output: {
@@ -145,23 +145,23 @@ module.exports = {
       verbose: true,
     }),
     new HtmlWebpackPlugin({
-      template: path.join(viewsPath, 'popup.html'),
-      inject: 'body',
-      chunks: ['popup'],
-      filename: 'popup.html',
-    }),
-    new HtmlWebpackPlugin({
       template: path.join(viewsPath, 'options.html'),
       inject: 'body',
       chunks: ['options'],
       filename: 'options.html',
+    }),
+    new HtmlWebpackPlugin({
+      template: path.join(viewsPath, 'popup.html'),
+      inject: 'body',
+      chunks: ['popup'],
+      filename: 'popup.html',
     }),
     // write css file(s) to build folder
     new MiniCssExtractPlugin({filename: 'css/[name].css'}),
     // copy static assets
     new CopyWebpackPlugin({
       patterns: [
-        { from: 'source/assets', to: 'assets' }
+        { from: 'src/assets', to: 'assets' }
       ]
     }),
     // plugin to enable browser reloading in development mode

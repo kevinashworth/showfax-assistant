@@ -5,6 +5,7 @@ import './styles.scss';
 const Options: React.FC = () => {
   return (
     <div>
+      <h1>This is the Options Page</h1>
       <form>
         <p>
           <label htmlFor="name">Name</label>

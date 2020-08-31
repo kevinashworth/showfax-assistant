@@ -10,7 +10,7 @@ function openWebPage(url: string): Promise<Tabs.Tab> {
 const Popup: React.FC = () => {
   return (
     <section id="popup">
-      <h2>WEB-EXTENSION-STARTER</h2>
+      <h1>This is the Popup Page</h1>
       <button
         id="options__button"
         type="button"
@@ -18,7 +18,7 @@ const Popup: React.FC = () => {
           return openWebPage('options.html');
         }}
       >
-        Options Page
+        Open Options Page
       </button>
       <div className="links__holder">
         <ul>

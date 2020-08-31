@@ -38,7 +38,7 @@
     "default_icon": {
       "16": "assets/icons/icon-16.png"
     },
-    "default_title": "tiny title",
+    "default_title": "This is the Popup tiny title",
     "__chrome|opera__chrome_style": false,
     "__firefox__browser_style": false
   },
@@ -63,6 +63,7 @@
     ],
     "js": [
       "js/contentScript.bundle.js"
-    ]
+    ],
+    "run_at": "document_end"
   }]
 }
