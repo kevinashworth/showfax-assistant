@@ -1,0 +1,15 @@
+@import './fonts';
+
+body,
+div,
+h1, h2, h3, h4, h5, h6,
+p {
+  color: #202124;
+  font-family: $dmsans;
+}
+p {
+  font-size: 14px;
+}
+.red {
+  color: #C0392B;
+}

@@ -1,31 +1,30 @@
 import React from 'react';
+import Form from 'react-bootstrap/Form';
 
-import './styles.scss';
+import '../styles/styles.scss';
 
 const Options: React.FC = () => {
   return (
-    <div>
-      <h1>This is the Options Page</h1>
-      <form>
+    <div className='container-fluid'>
+      <p><strong>This is the Options Page</strong></p>
+      <Form>
         <p>
-          <label htmlFor="name">Name</label>
+          <Form.Label htmlFor='name'>Lorem</Form.Label>
           <br />
-          <input
-            type="text"
-            id="name"
-            name="name"
-            spellCheck="false"
-            autoComplete="off"
+          <Form.Control
+            type='text'
+            id='name'
+            name='name'
+            spellCheck='false'
+            autoComplete='off'
             required
           />
         </p>
         <p>
-          <label htmlFor="logging">
-            <input type="checkbox" name="logging" /> Show the features enabled
-            on each page in the console
-          </label>
+          <Form.Label className='red' htmlFor='logging'>Ipsum</Form.Label>
+          <Form.Check type='checkbox' name='logging' />
         </p>
-      </form>
+      </Form>
     </div>
   );
 };
