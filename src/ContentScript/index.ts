@@ -1,3 +1,6 @@
+import 'emoji-log';
+import { browser } from 'webextension-polyfill-ts';
+
 // let submitted = -1;
 
 // const resultsRegion = <HTMLElement>document.getElementById('results_region');
@@ -111,6 +114,10 @@ async function runContentScript () {
   var targetResultsLoading = <HTMLElement>document.getElementById('results_loading');
   var targetResultsQuick = <HTMLElement>document.getElementById('results_quick');
   var targetResultsRegion = <HTMLElement>document.getElementById('results_region');
+  console.log(targetResultsContainer);
+  console.log(targetResultsLoading);
+  console.log(targetResultsQuick);
+  console.log(targetResultsRegion);
   targetObserver.observe(targetResultsContainer, observerConfigSm);
   targetObserver.observe(targetResultsLoading, observerConfigSm);
   targetObserver.observe(targetResultsQuick, observerConfigSm);
@@ -159,14 +166,21 @@ async function runContentScript () {
     console.table(state);
   }
 
-
-
-
   // sortByDropdown.options[0].selected = true; // Newest
 
   console.log('Goodbye from runContentScript');
 }
 
-runContentScript();
+console.emoji('🦄', 'Showfax Assistant loaded');
+
+const sendToBackgroundScript = (e: Event) => {
+  console.log('sendToBackgroundScript in ContentScript/index:');
+  console.dir(e);
+  browser.runtime.sendMessage({
+    "title": "click",
+    "message": "happened"
+  });
+}
+window.addEventListener("click", sendToBackgroundScript);
 
 export {};
