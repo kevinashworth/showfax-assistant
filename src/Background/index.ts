@@ -1,5 +1,6 @@
 import 'emoji-log';
 import { browser, Tabs } from 'webextension-polyfill-ts';
+import { onError } from '../helpers';
 
 let saTabId = null;
 
@@ -36,10 +37,6 @@ browser.tabs.sendMessage(saTabId, {
   "message": "do it"
 });
 
-
-function onError(error) {
-  console.error(`Error: ${error}`);
-}
 
 function sendMessageToTabs(tabs) {
   for (let tab of tabs) {

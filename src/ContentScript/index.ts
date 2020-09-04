@@ -60,10 +60,6 @@ import { browser } from 'webextension-polyfill-ts';
 //   subtree: true
 // };
 
-// const sleep = (ms: number) => {
-//   return new Promise(resolve => setTimeout(resolve, ms));
-// }
-
 // async function runContentScript () {
 //   console.log('Hello...');
 
@@ -191,6 +187,7 @@ const run = async () => {
 }
 
 console.emoji('🦄', 'Showfax Assistant ContentScript/index loaded');
+import { onError, sleep } from '../helpers';
 
 const sendToBackgroundScript = (e: Event) => {
   console.log('sendToBackgroundScript in ContentScript/index:');
