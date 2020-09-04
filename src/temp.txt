@@ -1,6 +1,11 @@
 GOAL
 If there is not a list of projects displayed, get a list to display.
 
+if (document.querySelectorAll('.table-div-table-body')[0].children.length) {
+  // there is a list, do nothing
+} else {
+
+}
 
 BACKGROUND
 
@@ -21,10 +26,36 @@ browser.tabs.sendMessage(saTabId, {
   "message": "do it"
 });
 
+const filter = {
+  urls: ['<all_urls>']
+};
+const onWebReqCompleted = (details: object) => {
+  console.log('onWebReqCompleted', details);
+}
+browser.webRequest.onCompleted.addListener(onWebReqCompleted, filter);
 
 
 
 CONTENT SCRIPT
+
+console.log('waiting 2000 then running this thing');
+await sleep(2000)
+
+if (document.querySelectorAll('.table-div-table-body')[0].children.length) {
+  // there is a list of projects displayed, so do nothing
+  sleep(5000);
+} else {
+  runThisThing();
+}
+
+window.addEventListener('DOMContentLoaded', (event) => {
+  const endTime = new Date().getTime();
+  console.error ('DOM fully loaded and parsed after', endTime - startTime, 'milliseconds');
+});
+
+// var el = document.querySelector('input[name="regionButton"]')
+// var style = window.getComputedStyle(el)
+// var searchVisible = (style.visibility === 'visible')
 
 const sendToBackgroundScript = (e: Event) => {
   console.log('sendToBackgroundScript in ContentScript/index:');

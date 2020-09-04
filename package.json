@@ -1,6 +1,6 @@
 {
   "name": "showfax-assistant",
-  "version": "0.3.0",
+  "version": "0.3.11",
   "description": "Browser extension to make small but useful changes to Showfax webpages. Not affiliated with Showfax.com",
   "private": true,
   "license": "MIT",
@@ -9,7 +9,7 @@
     "yarn": ">= 1.0.0"
   },
   "scripts": {
-    "dev:chrome": "cross-env NODE_ENV=development cross-env TARGET_BROWSER=chrome webpack --watch",
+    "dev:chrome": "yarn version --patch --no-git-tag-version --no-commit-hooks && cross-env NODE_ENV=development cross-env TARGET_BROWSER=chrome webpack --watch",
     "dev:firefox": "cross-env NODE_ENV=development cross-env TARGET_BROWSER=firefox webpack --watch",
     "dev:opera": "cross-env NODE_ENV=development cross-env TARGET_BROWSER=opera webpack --watch",
     "build:chrome": "cross-env NODE_ENV=production cross-env TARGET_BROWSER=chrome webpack",
