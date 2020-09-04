@@ -1,0 +1,190 @@
+.modal-div {
+	display: none; /* Hidden by default */
+	position: fixed; /* Stay in place */
+	z-index: 1000; /* Sit on top */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	background-color: rgb(0,0,0); /* Fallback color */
+	background-color: rgba(0,0,0,0.5); /* Black w/ opacity */
+}
+
+.modal-container {
+	background-color: #ffffff;
+	max-width: 75%;
+	max-height: 75%;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	overflow-y: auto;
+	border: solid 1px #d5d5d5;
+	box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.5);
+	border-radius: 40px;
+}
+
+.modal-signin-container {
+	background-color: #ffffff;
+	max-width: 75%;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	overflow-y: auto;
+	border: solid 1px #d5d5d5;
+	box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.5);
+	border-radius: 40px;
+}
+
+.modal-download-container {
+	background-color: #ffffff;
+	max-width: 75%;
+	max-height: 75%;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	overflow-y: auto;
+	border: solid 1px #d5d5d5;
+	box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.5);
+	border-radius: 40px;
+}
+
+.modal-container iframe {
+	width: 100%;
+	height: 99%;
+	border-width: 0;
+}
+
+.modal-content {
+	padding: 0 60px 30px 60px;
+}
+
+.modal-loading {
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	vertical-align: middle;
+	z-index: 1001;
+	background-color: #ffffff;
+	display: none;
+}
+
+.modal-loading img, .modal-loading i {
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.modal-header {
+	position: relative;
+	height: 60px;
+}
+
+.modal-close {
+	position: absolute;
+	right: 30px;
+	top: 30px;
+	cursor: pointer;
+}
+
+.modal-close img {
+	width: 20px;
+}
+
+.modal-title {
+	font-family: 'Nunito', sans-serif;
+	font-size: 30px;
+	font-weight: bold;
+	text-align: center;
+	color: #202124;
+}
+
+.modal-subtitle {
+	font-family: 'Nunito', sans-serif;
+	font-size: 14px;
+	text-align: center;
+	color: #202124;
+}
+
+.modal-subtitle.maps-links {
+	padding: 10px;
+	margin-top: 20px;
+}
+.modal-subtitle.maps-links ~ .modal-subtitle.maps-links {
+	margin-top: 10px;
+}
+
+.modal-subtitle.maps-links a,
+.modal-subtitle.maps-links input {
+	background-color: #5da113;
+	border: solid 1px #5da113;
+	border-radius: 5px;
+	box-sizing: border-box;
+	color: #ffffff;
+	cursor: pointer;
+	display: inline-block;
+	font-size: 14px;
+	font-weight: normal;
+	height: 30px;
+	min-width: 300px;
+	padding: 6px 20px 0 20px;
+	text-decoration: none;
+	width: 80%;
+}
+
+.modal-subtitle.maps-links input:disabled{
+	background-color: #d5d5d5;
+	border: solid 1px #d5d5d5;
+	cursor: not-allowed;
+	}
+	
+.modal-confnumber {
+	margin-top: 32px;
+	width: 380px;
+}
+
+.modal-login {
+	margin-bottom: 0;
+	margin-top: 32px;
+}
+
+.modal-onetimepayment {
+	padding-top: 5px;
+}
+
+.modal-retry {
+	margin-top: 22px;
+}
+
+.modal-loginsubmit {
+	margin-top: 10px;
+}
+
+.modal-onetimesubmit {
+	margin-top: 22px;
+}
+
+.modal-message {
+	width: 100%;
+	height: 10px;
+	padding-top: 20px;
+	display: block;
+	font-family: 'DMSans', sans-serif;
+	font-size: 14px;
+	font-weight: normal;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: 0.71;
+	letter-spacing: normal;
+	text-align: center;
+}
+
+.modal-danger {
+	color: #c0392b;
+}
