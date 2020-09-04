@@ -1,4 +1,3 @@
-import 'emoji-log';
 import { browser } from 'webextension-polyfill-ts';
 
 const run = async () => {
@@ -20,7 +19,6 @@ const run = async () => {
   }
 }
 
-console.emoji('🦄', 'Showfax Assistant ContentScript/index loaded');
 import { onError, sleep } from '../helpers';
 
 const sendToBackgroundScript = (e: Event) => {
@@ -47,4 +45,5 @@ browser.runtime.onMessage.addListener(request => {
   return Promise.resolve({ response: "Hi from Showfax Assistant content script" });
 });
 
+console.log('Showfax Assistant ContentScript/index loaded');
 export {};

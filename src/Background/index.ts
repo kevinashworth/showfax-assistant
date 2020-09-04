@@ -1,11 +1,10 @@
-import 'emoji-log';
 import { browser, Tabs } from 'webextension-polyfill-ts';
 import { onError } from '../helpers';
 
 let saTabId = null;
 
 const onInstalledHandler = (details): void => {
-  console.emoji('🦄', 'Showfax Assistant installed');
+  console.log('Showfax Assistant installed:');
   if (details.reason === "install") {
     browser.storage.local.set({ change_showfax_titles: true });
     browser.storage.local.set({ add_showfax_dropdowns: true });
