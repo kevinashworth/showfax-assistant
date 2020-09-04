@@ -17,26 +17,10 @@ const onInstalledHandler = (details): void => {
 }
 browser.runtime.onInstalled.addListener(onInstalledHandler);
 
-const onTabUpdateHandler = (tabId: number, changeInfo: Tabs.OnUpdatedChangeInfoType, tab: Tabs.Tab) => {
-  console.groupCollapsed('onTabUpdateHandler:');
-  console.log('tab id:', tabId);
-  saTabId = tabId;
-  console.log('changeInfo:', changeInfo);
-  console.log('tab:', tab);
-  console.groupEnd()
-}
-browser.tabs.onUpdated.addListener(onTabUpdateHandler);
-
 const onMessageHandler = (message: any): void => {
   console.log('Showfax Assistant message in Background/index:', message);
 }
 browser.runtime.onMessage.addListener(onMessageHandler);
-
-browser.tabs.sendMessage(saTabId, {
-  "title": "run",
-  "message": "do it"
-});
-
 
 function sendMessageToTabs(tabs) {
   for (let tab of tabs) {
