@@ -74,5 +74,10 @@
     "wext-manifest-webpack-plugin": "^1.2.1",
     "zip-webpack-plugin": "^3.0.0"
   },
-  "peerDependencies": {}
+  "peerDependencies": {},
+  "semistandard": {
+    "ignore": [
+      "showfax.com/**"
+    ]
+  }
 }
