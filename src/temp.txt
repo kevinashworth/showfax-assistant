@@ -38,6 +38,23 @@ browser.webRequest.onCompleted.addListener(onWebReqCompleted, filter);
 
 CONTENT SCRIPT
 
+Page is built weird. Do not use these region or category selectors directly but sibling ul/li elements
+
+// Los Angeles
+// const regionSelector = <HTMLSelectElement>document.querySelector('select[name="regionValue"]');
+// regionSelector.options[1].selected = true;
+const regionSelectorUL = <HTMLUListElement>document.querySelector('select[name="regionValue"] ~ ul');
+const regionSelectorLILA = <HTMLLIElement>regionSelectorUL.children[0];
+regionSelectorLILA.click();
+
+// Episodics
+// const categorySelector = <HTMLSelectElement>document.querySelector('select[name="categoryValue"]');
+// categorySelector.options[1].selected = true;
+const categorySelectorUL = <HTMLUListElement>document.querySelector('select[name="regionValue"] ~ ul');
+const categorySelectorLILA = <HTMLLIElement>categorySelectorUL.children[0];
+categorySelectorLILA.click();
+
+
 console.log('waiting 2000 then running this thing');
 await sleep(2000)
 

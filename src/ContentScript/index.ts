@@ -4,6 +4,24 @@ import { onError, sleep } from '../helpers';
 
 const t0 = performance.now();
 log.setLevel('debug');
+
+interface State {
+  firstPass?: boolean,
+  secondPass?: boolean
+}
+
+interface Message {
+  type: string,
+  state?: Partial<State>,
+  greeting?: string
+}
+
+// This is a copy of state
+let state: State = {
+  firstPass: false,
+  secondPass: false
+}
+
 window.addEventListener('load', (event) => {
   const t1 = performance.now();
   log.debug('Page fully loaded after', Math.round((t1 - t0 + Number.EPSILON) * 100) / 100, 'milliseconds');
@@ -17,8 +35,16 @@ window.addEventListener('load', (event) => {
 
 const sendOnClick = (e: MouseEvent) => {
   // log.debug('sendOnClick in ContentScript/index:');
+  let greeting = 'sendOnClick';
+  if (e.screenX === 0 && e.screenY === 0) {
+    greeting += ' (from script)';
+  } else {
+    greeting += ' (from user)';
+    log.debug(e);
+  }
   browser.runtime.sendMessage({
-    greeting: 'Click just happened'
+    type: 'greeting',
+    greeting
   }).then(response => {
     log.debug('Message response:');
     log.debug(response.response);
@@ -26,14 +52,21 @@ const sendOnClick = (e: MouseEvent) => {
 }
 window.addEventListener('click', sendOnClick);
 
-browser.runtime.onMessage.addListener(request => {
-  console.log('ContentScript/index onMessage:');
-  console.log(request);
-  if (request.command && request.command === 'runThisThing') {
-    firstPassForRegionResults();
+const onMessageHandler = (message: Message) => {
+  if (message.type === 'getState') {
+    log.debug('State:', message.state);
+    state = message.state;
   }
-  return Promise.resolve({ response: 'Hi from Showfax Assistant ContentScript/index' });
-});
+}
+browser.runtime.onMessage.addListener(onMessageHandler);
+// browser.runtime.onMessage.addListener(request => {
+//   log.debug('ContentScript/index onMessage:');
+//   log.debug(request);
+//   if (request.command && request.command === 'runThisThing') {
+//     firstPassForRegionResults();
+//   }
+//   return Promise.resolve({ response: 'Hi from Showfax Assistant ContentScript/index' });
+// });
 
 const firstPassForRegionResults = async () => {
   if (document.querySelectorAll('.table-div-table-body')[0].children.length) {
@@ -43,11 +76,16 @@ const firstPassForRegionResults = async () => {
     if (!regionSearchButton.classList.contains('is-selected')) {
       regionSearchButton.click();
     }
-    const regionSelector = <HTMLSelectElement>document.querySelector('select[name="regionValue"]');
-    regionSelector.options[1].selected = true; // Los Angeles
 
-    const categorySelector = <HTMLSelectElement>document.querySelector('select[name="categoryValue"]');
-    categorySelector.options[1].selected = true; // Episodics
+    // Los Angeles
+    const regionSelectorUL = <HTMLUListElement>document.querySelector('select[name="regionValue"] ~ ul');
+    const regionSelectorLILA = <HTMLLIElement>regionSelectorUL.children[0];
+    regionSelectorLILA.click();
+
+    // Episodics
+    const categorySelectorUL = <HTMLUListElement>document.querySelector('select[name="regionValue"] ~ ul');
+    const categorySelectorLILA = <HTMLLIElement>categorySelectorUL.children[0];
+    categorySelectorLILA.click();
 
     const targetResultsRegion = <HTMLElement>document.getElementById('results_region');
     const formSearchButton = <HTMLInputElement>document.querySelector('input[name="regionButton"]');
@@ -56,6 +94,12 @@ const firstPassForRegionResults = async () => {
       formSearchButton.click();
     }
   }
+  browser.runtime.sendMessage({
+    type: 'setState',
+    state: {
+      firstPass: true
+    }
+  }).catch(onError);
 }
 
 const secondPassForSortedResults = async () => {
@@ -74,6 +118,12 @@ const secondPassForSortedResults = async () => {
       newestSelector.click();
     }
   }
+  browser.runtime.sendMessage({
+    type: 'setState',
+    state: {
+      secondPass: true
+    }
+  }).catch(onError);
 }
 
 export {};

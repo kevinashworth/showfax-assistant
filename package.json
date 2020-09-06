@@ -1,6 +1,6 @@
 {
   "name": "showfax-assistant",
-  "version": "0.3.11",
+  "version": "0.3.14",
   "description": "Browser extension to make small but useful changes to Showfax webpages. Not affiliated with Showfax.com",
   "private": true,
   "license": "MIT",
