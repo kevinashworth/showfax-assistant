@@ -1,23 +1,27 @@
 import { browser } from 'webextension-polyfill-ts';
+import log from 'loglevel';
 import { onError, sleep } from '../helpers';
 
-const startTime = new Date().getTime();
-console.log('ContentScript/index started');
+const t0 = performance.now();
+log.setLevel('debug');
 window.addEventListener('load', (event) => {
-  const endTime = new Date().getTime();
-  console.log('Page fully loaded after', endTime - startTime, 'milliseconds');
-  firstPassForRegionResults();
-  secondPassForSortedResults();
+  const t1 = performance.now();
+  log.debug('Page fully loaded after', Math.round((t1 - t0 + Number.EPSILON) * 100) / 100, 'milliseconds');
+  if (!state.firstPass) {
+    firstPassForRegionResults();
+  }
+  if (!state.secondPass) {
+    secondPassForSortedResults();
+  }
 });
 
 const sendOnClick = (e: MouseEvent) => {
-  console.log('sendOnClick in ContentScript/index:');
-  console.log(e);
+  // log.debug('sendOnClick in ContentScript/index:');
   browser.runtime.sendMessage({
     greeting: 'Click just happened'
   }).then(response => {
-    console.log('Message probably from background:');
-    console.log(response);
+    log.debug('Message response:');
+    log.debug(response.response);
   }).catch(onError);
 }
 window.addEventListener('click', sendOnClick);
@@ -33,7 +37,7 @@ browser.runtime.onMessage.addListener(request => {
 
 const firstPassForRegionResults = async () => {
   if (document.querySelectorAll('.table-div-table-body')[0].children.length) {
-    console.log('there is a list, do nothing');
+    log.debug('there is a list, do nothing');
   } else {
     const regionSearchButton = <HTMLButtonElement>document.querySelector('button[name="searchMethodButtons_region"]');
     if (!regionSearchButton.classList.contains('is-selected')) {
@@ -48,7 +52,7 @@ const firstPassForRegionResults = async () => {
     const targetResultsRegion = <HTMLElement>document.getElementById('results_region');
     const formSearchButton = <HTMLInputElement>document.querySelector('input[name="regionButton"]');
     if (!targetResultsRegion || targetResultsRegion.classList.contains('hidden')) {
-      console.log('Will now click formSearchButton');
+      log.debug('Will now click formSearchButton');
       formSearchButton.click();
     }
   }
@@ -60,10 +64,10 @@ const secondPassForSortedResults = async () => {
     await sleep(2000);
   }
   if (document.querySelectorAll('.table-div-table-body')[0].children.length) {
-    console.log('there is a list');
+    log.debug('there is a list');
     const sortBySelector = <HTMLElement>document.querySelector('#results_region > div.results-header-header > div > label > div > div')
     if (sortBySelector.classList.contains('selection-selected')) {
-      console.log('there is a list, it is sorted');
+      log.debug('there is a list, it is sorted');
     } else {
       sortBySelector.click();
       const newestSelector = <HTMLElement>document.querySelector('#results_region > div.results-header-header > div > label > div > ul > li:nth-child(1)');
