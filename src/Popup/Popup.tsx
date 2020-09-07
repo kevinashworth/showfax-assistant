@@ -1,5 +1,8 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col'
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
 import { browser, Tabs } from 'webextension-polyfill-ts';
 
 import '../styles/styles.scss';
@@ -10,8 +13,10 @@ function openWebPage(url: string): Promise<Tabs.Tab> {
 
 const Popup: React.FC = () => {
   return (
-    <div className='container'>
-      <h1>This is the Popup Page</h1>
+    <Container className='my-4'>
+      <Row>
+        <Col>
+      <h3>This is the Popup Page</h3>
       <Button
         onClick={(): Promise<Tabs.Tab> => {
           return openWebPage('options.html');
@@ -39,7 +44,9 @@ const Popup: React.FC = () => {
       >
         Buy Me A Coffee
       </Button>
-    </div>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

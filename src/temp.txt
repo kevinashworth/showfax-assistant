@@ -38,6 +38,16 @@ browser.webRequest.onCompleted.addListener(onWebReqCompleted, filter);
 
 CONTENT SCRIPT
 
+// browser.runtime.onMessage.addListener(request => {
+//   log.debug('ContentScript/index onMessage:');
+//   log.debug(request);
+//   if (request.command && request.command === 'runThisThing') {
+//     firstPassForRegionResults();
+//   }
+//   return Promise.resolve({ response: 'Hi from Showfax Assistant ContentScript/index' });
+// });
+
+
 Page is built weird. Do not use these region or category selectors directly but sibling ul/li elements
 
 // Los Angeles

@@ -1,31 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Col from 'react-bootstrap/Col'
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import { browser } from 'webextension-polyfill-ts';
 import Form from 'react-bootstrap/Form';
 
 import '../styles/styles.scss';
 
 const Options: React.FC = () => {
+  browser.storage.local.get('change_showfax_titles')
+    .then((result) => {
+      console.info(`browser.storage.local.get('change_showfax_titles')`, result)
+      if (typeof result === 'boolean') {
+        setCbTitles(result);
+      } else {
+        setCbTitles(true)
+      }
+      return false;
+    });
+  const [cbTitles, setCbTitles] = useState(true);
+  // const handleToggle = (e) => setCbTitles(e);
   return (
-    <div className='container-fluid'>
-      <p><strong>This is the Options Page</strong></p>
-      <Form>
-        <p>
-          <Form.Label htmlFor='name'>Lorem</Form.Label>
-          <br />
-          <Form.Control
-            type='text'
-            id='name'
-            name='name'
-            spellCheck='false'
-            autoComplete='off'
-            required
-          />
-        </p>
-        <p>
-          <Form.Label className='red' htmlFor='logging'>Ipsum</Form.Label>
-          <Form.Check type='checkbox' name='logging' />
-        </p>
-      </Form>
-    </div>
+    <Container fluid className='my-4'>
+      <Row>
+        <Col>
+          <strong>Showfax Assistant Options</strong>
+          <Form>
+            <Form.Check custom type="checkbox" id='change_showfax_titles' label="Change Showfax Titles" checked={cbTitles} onChange={(e) => setCbTitles(e.target.checked)} />
+            <Form.Check custom type="checkbox" label="Add Showfax Dropdowns" />
+          </Form>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

@@ -1,19 +1,10 @@
 import { browser, Tabs, WebRequest, Runtime } from 'webextension-polyfill-ts';
 import log from 'loglevel';
-import { onError } from '../helpers';
+import { onError, onStart } from '../helpers';
+import type { Message, State } from '../types';
 
+onStart();
 log.setLevel('debug');
-
-interface State {
-  firstPass: boolean,
-  secondPass: boolean
-}
-
-interface Message {
-  type: string,
-  state?: Partial<State>,
-  greeting?: string
-}
 
 // This is the true source of state
 let state: State = {
@@ -53,7 +44,7 @@ const onMessageHandler = (message: Message, sender: Runtime.MessageSender) => {
     log.debug('Background/index onMessageHandler:');
     log.debug(JSON.stringify(message, null, 2));
   }
-  log.debug('sender:', sender);
+  // log.debug('sender:', sender);
   return Promise.resolve({ response: 'This is the response from background script' })
 }
 browser.runtime.onMessage.addListener(onMessageHandler);
@@ -68,8 +59,10 @@ function sendMessageToTabs(tabs) {
         command: 'runThisThing'
       }
     ).then(response => {
-      log.debug('Message probably from content script:');
-      log.debug(response.response);
+      if (response) {
+        log.debug('Message probably from content script:');
+        log.debug(response.response);
+      }
     }).catch((e) => onError(e, 'sendMessageToTabs'));
   }
 }
